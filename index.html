@@ -283,7 +283,7 @@
                         </div>
                         <div className="d-flex align-items-center flex-column">
                             <div>{stats.score_kills} / <span style={{ color: 'red' }}>{stats.score_deaths}</span> / {stats.score_assists}</div>
-                            <div>{stats.score_deaths === 0 ? 'Perfect' : ((stats.score_kills + stats.score_assists) / stats.score_deaths) + ':1'} KDA</div>
+                            <div>{stats.score_deaths === 0 ? 'Perfect' : ((stats.score_kills + stats.score_assists) / stats.score_deaths).toFixed(2) + ':1'} KDA</div>
                         </div>
                         <div className="d-flex flex-column align-items-center">
                             <div>Level{stats.champion_level}</div>
