@@ -47,22 +47,22 @@
             );
 
             // Network requests
+            async function warmUpHeroku() {
+                await fetch(node_host);
+            }
+
             async function getChampionList() {
-                return new Promise(resolve => {
-                    setTimeout(async () => {
-                        result = await fetch(`https://ddragon.leagueoflegends.com/cdn/${riot_version}/data/en_US/champion.json`);
-                        result = await result.json();
-                        result = Object.values(result.data);
+                result = await fetch(`https://ddragon.leagueoflegends.com/cdn/${riot_version}/data/en_US/champion.json`);
+                result = await result.json();
+                result = Object.values(result.data);
 
-                        resolve(result);
+                return result;
 
-                        var result;
-                    }, 2500) // Artificial delay to enjoy the spinner
-                })
+                var result;
             }
 
             async function getSummonerSpells() {
-                result = await fetch('https://ddragon.leagueoflegends.com/cdn/10.6.1/data/en_US/summoner.json');
+                result = await fetch(`https://ddragon.leagueoflegends.com/cdn/${riot_version}/data/en_US/summoner.json`);
                 result = await result.json();
                 result = Object.values(result.data);
 
@@ -154,7 +154,8 @@
                     try {
                         const [champions, summoner_spells] = await Promise.all([
                             getChampionList(),
-                            getSummonerSpells()
+                            getSummonerSpells(),
+                            warmUpHeroku()
                         ]);
 
                         // LocalStorage seems like a good alternative/option, memory is faster than disk and this app isn't huge
